@@ -26,7 +26,7 @@ if [ "$(ls -A $BAM)" ]; then
         samtools sort $BAM/$prefix.bam -o $BAM/$prefix.sorted;
         samtools index $BAM/$prefix.sorted;
         samtools mpileup -q 30 -u -f $HOME/ref_genome.fasta $BAM/$prefix.sorted > $BCF/$prefix.bcf -I;
-        bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
+        bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf
     done
 else
     for f in $DIRECTORY/*1.fastq.gz; do prefix=$( basename $f | sed 's/_1.fastq.gz//g' );
@@ -35,6 +35,6 @@ else
         samtools sort $BAM/$prefix.bam -o $BAM/$prefix.sorted;
         samtools index $BAM/$prefix.sorted;
         samtools mpileup -q 30 -u -f $HOME/ref_genome.fasta $BAM/$prefix.sorted > $BCF/$prefix.bcf -I;
-        bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
+        bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf
     done
 fi
