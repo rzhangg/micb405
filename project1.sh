@@ -17,18 +17,19 @@ cp $DIRECTORY/ref_genome.fasta $HOME
 # mv *.fastq /home/$DIRECTORY/project1/0_fastq
 
 bwa index $HOME/ref_genome.fasta 
-REFERENCE = $HOME/ref_genome.fasta
+REFERENCE=$HOME/ref_genome.fasta
 cd $HOME
-if [ "$(ls -A $BAM)" ]; then
-    for f in $BAM/*.bam; do 
-        prefix=$( basename $f | sed 's/bam//g' );
-        echo $prefix;
-        samtools sort $BAM/$prefix.bam -o $BAM/$prefix.sorted;
-        samtools index $BAM/$prefix.sorted;
-        samtools mpileup -q 30 -u -f $HOME/ref_genome.fasta $BAM/$prefix.sorted > $BCF/$prefix.bcf -I;
-        bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
-    done
-else
+# if [ "$(ls -A $BAM)" ]; then
+#     echo inbam
+#     for f in $BAM/*.bam; do 
+#         prefix=$( basename $f | sed 's/.bam//g' );
+#         echo $prefix;
+#         samtools sort $BAM/$prefix.bam -o $BAM/$prefix.sorted;
+#         samtools index $BAM/$prefix.sorted;
+#         samtools mpileup -q 30 -u -f $HOME/ref_genome.fasta $BAM/$prefix.sorted > $BCF/$prefix.bcf -I;
+#         bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
+#     done
+# else
     for f in $DIRECTORY/*1.fastq.gz; do prefix=$( basename $f | sed 's/_1.fastq.gz//g' );
         echo $prefix;
         bwa mem -t 4 $HOME/ref_genome.fasta $DIRECTORY/$prefix\_1.fastq.gz $DIRECTORY/$prefix\_2.fastq.gz | samtools view -b > $BAM/$prefix.bam; 
@@ -37,4 +38,5 @@ else
         samtools mpileup -q 30 -u -f $HOME/ref_genome.fasta $BAM/$prefix.sorted > $BCF/$prefix.bcf -I;
         bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
     done
-fi
+
+# fi
