@@ -21,4 +21,6 @@ if [ "$(ls -A $BAM)" ]; then
         samtools mpileup -q 30 -u -f $HOME/ref_genome.fasta $BAM/$prefix.sorted > $BCF/$prefix.bcf -I;
         bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
     done
+    mkdir variant
+    python vcf_to_fasta_het.py -x $VCF home/$USER/variant
 fi
