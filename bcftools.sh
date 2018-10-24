@@ -22,5 +22,5 @@ if [ "$(ls -A $BAM)" ]; then
         bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
     done
     mkdir variant
-    python vcf_to_fasta_het.py -x $VCF home/$USER/variant
+    python /projects/micb405/resources/vcf_to_fasta_het.py -h $VCF home/$USER/variant
 fi
