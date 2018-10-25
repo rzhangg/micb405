@@ -19,7 +19,7 @@ if [ "$(ls -A $DUP)" ]; then
     for f in $DUP/*.sorted.rmdup.bam; do 
         prefix=$( basename $f | sed 's/.sorted.rmdup.bam//g' );
         echo $prefix;
-        bcftools mpileup -q 30 -Ou -f $HOME/ref_genome.fasta $DUP/$prefix.sorted.rmdup.bam > $BCF/$prefix.bcf -I;
+        bcftools mpileup --threads 20 -q 30 -Ou -f $HOME/ref_genome.fasta $DUP/$prefix.sorted.rmdup.bam > $BCF/$prefix.bcf -I;
         bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
     done
 fi
