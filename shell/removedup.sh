@@ -5,13 +5,13 @@ BAM=/home/$USER/bam
 REFERENCE=$HOME/ref_genome.fasta
 mkdir removedup
 DUP=/home/$USER/removedup
-
-if [ "$(ls -A $BAM)" ]; then
+SORTED=/home/$USER/sorted
+if [ "$(ls -A $SORTED)" ]; then
     echo inbam
-    for f in $BAM/*.sorted; do 
+    for f in $SORTED/*.sorted; do 
         prefix=$( basename $f | sed 's/.sorted//g' );
         echo $prefix;
-        samtools rmdup $BAM/$prefix.sorted $DUP/$prefix.sorted.rmdup.bam
+        samtools rmdup $SORTED/$prefix.sorted $DUP/$prefix.sorted.rmdup.bam
     done
 
 fi

@@ -21,10 +21,5 @@ if [ "$(ls -A $DUP)" ]; then
         echo $prefix;
         bcftools mpileup -q 30 -Ou -f $HOME/ref_genome.fasta $DUP/$prefix.sorted.rmdup.bam > $BCF/$prefix.bcf -I;
         bcftools call -O v -mv $BCF/$prefix.bcf > $VCF/$prefix.vcf;
-        bcftools filter --exclude "QUAL < 200" $VCF/$prefix.vcf > $FILTER/$prefix.vcf;
     done
-    mkdir variant
-    python /projects/micb405/resources/vcf_to_fasta_het.py -x $FILTER/ variant
-    mv $FILTER/variant_x.fasta /home/$USER/variant
-    mv $FILTER/variant_x.tabular /home/$USER/variant
 fi
