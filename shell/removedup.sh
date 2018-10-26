@@ -14,7 +14,7 @@ if [ "$(ls -A $SORTED)" ]; then
         prefix=$( basename $f | sed 's/.sorted//g' );
         echo $prefix;
         samtools rmdup $SORTED/$prefix.sorted $DUP/$prefix.sorted.rmdup.bam
-        samtools index $DUPINDEX/$prefix.sorted.rmdup.bam
+        samtools index $DUP/$prefix.sorted.rmdup.bam > $DUPINDEX/$prefix.sorted.rmdup.bam.bai
     done
 
 fi

@@ -14,12 +14,13 @@ cd $HOME
 if [ "$(ls -A $VCF)" ]; then
     echo inbam
     for f in $VCF/*.vcf; do 
-        prefix=$( basename $f | sed 's/.sorted//g' );
+        prefix=$( basename $f | sed 's/.vcf//g' );
         echo $prefix;
-        bcftools filter --exclude "QUAL < 200" $FILTER/$prefix.vcf
+        bcftools filter --exclude "QUAL < 200" $VCF/$prefix.vcf > $FILTER/$prefix.filter.vcf
     done
-    mkdir variant
-    python /projects/micb405/resources/vcf_to_fasta_het.py -x $FILTER/ variant
-    mv $FILTER/filter_variant_x.fasta /home/$USER/variant
-    mv $FILTER/filter_variant_x.tabular /home/$USER/variant
+    
 fi
+mkdir variant
+python /projects/micb405/resources/vcf_to_fasta_het.py -x $FILTER/ variant
+mv $FILTER/*.fasta /home/$USER/variant
+mv $FILTER/*.tabular /home/$USER/variant
