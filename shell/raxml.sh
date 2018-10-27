@@ -11,7 +11,7 @@ VCF=/home/$USER/vcf
 mkdir tree
 TREE=/home/$USER/tree
 
-# bwa index $HOME/ref_genome.fasta 
+# bwa index $HOME/ref_genome.fasta
 REFERENCE=$HOME/ref_genome.fasta
 cd $HOME
 
@@ -20,6 +20,6 @@ if [ "$(ls -A $variant)" ]; then
     muscle -in /home/$USER/variant/$FILE.fasta -out $TREE/$FILE.mfa
     trimal -automated1 -in $TREE/$FILE.mfa -out $TREE/$FILE_trimal.mfa
     raxml-ng --all --msa $TREE/$FILE_trimal.mfa \
-    --model LG+G2 --tree rand{4} --bs-trees 4 \
-    --threads 2 --seed 12345 > $TREE
+    --model LG+G2 --tree rand{100} --bs-trees 20 \
+    --threads 1 --seed 12345 --prefix ~/$OUTPUT
 fi
