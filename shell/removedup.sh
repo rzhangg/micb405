@@ -7,14 +7,16 @@ mkdir removedup
 
 DUP=/home/$USER/removedup
 SORTED=/home/$USER/sorted
-
+mkdir sortedindex
+SORTEDINDEX=/home/$USER/sortedindex
 if [ "$(ls -A $SORTED)" ]; then
     echo inbam
     for f in $SORTED/*.sorted.bam; do
         prefix=$( basename $f | sed 's/.sorted.bam//g' );
         echo $prefix;
-        samtools rmdup $SORTED/$prefix.sorted.bam $DUP/$prefix.sorted.rmdup.bam
-        samtools index $DUP/$prefix.sorted.rmdup.bam > $DUP/$prefix.sorted.rmdup.bam.bai
+        samtools rmdup $SORTED/$prefix.sorted.bam $DUP/$prefix.sorted.rmdup.bam;
+        samtools index $DUP/$prefix.sorted.rmdup.bam > $DUP/$prefix.sorted.rmdup.bam.bai;
+        samtools index $SORTED/$prefix.sorted.bam > $SORTEDINDEX/$prefix.sorted.bam.bai;
     done
 
 fi

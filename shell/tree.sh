@@ -20,4 +20,8 @@ if [ "$(ls -A $variant)" ]; then
     muscle -in /home/$USER/variant/$FILE.fasta -out $TREE/$FILE.mfa
     trimal -automated1 -in $TREE/$FILE.mfa -out $TREE/$FILE_trimal.mfa
     FastTree $TREE/$FILE_trimal.mfa 1>$TREE/$OUTPUT.nwk
+    raxml-ng --all --msa ProcessedData/Phylogeny/Latrotoxin_mafft.mfa \
+    --model LG+G2 --tree rand{4} --bs-trees 4 \
+    --threads 2 --seed 12345
+    
 fi
