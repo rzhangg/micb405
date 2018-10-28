@@ -7,6 +7,6 @@ cd $HOME
 
     for f in $DIRECTORY/*1.fastq.gz; do prefix=$( basename $f | sed 's/_1.fastq.gz//g' );
         echo $prefix;
-        fastqc --threads 20 -o $FASTQC $DIRECTORY/$prefix\_?.fastq.gz
+        fastqc --threads 20 -o $FASTQC $DIRECTORY/$prefix\_?.fastq.gz;
 
     done

@@ -85,8 +85,8 @@ if [ "$(ls -A $variant)" ]; then
     echo intree
     muscle -in /home/$USER/variant/variant.fasta -out $TREE/$variant.mfa;
     echo donemuscle
-    trimal -automated1 -in $TREE/$FILE.mfa -out $TREE/$FILE.trimal.mfa;
-    raxml-ng --all --msa $TREE/$FILE.trimal.mfa \
-    --model LG+G2 --tree rand{100} --bs-trees 20 \
+    # trimal -automated1 -in $TREE/$FILE.mfa -out $TREE/$FILE.trimal.mfa;
+    raxml-ng --all --msa $TREE/$variant.mfa \
+    --model GTR+G4 --tree rand{100} --bs-trees 20 \
     --threads 1 --seed 12345 --prefix ~/tree --redo;
 fi
