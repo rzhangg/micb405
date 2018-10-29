@@ -47,7 +47,6 @@ if [ "$(ls -A $SORTED)" ]; then
         echo $prefix;
         samtools rmdup $SORTED/$prefix.sorted.bam $DUP/$prefix.sorted.rmdup.bam;
         samtools index $DUP/$prefix.sorted.rmdup.bam > $SORTEDINDEX/$prefix.sorted.rmdup.bam.bai;
-        samtools index $SORTED/$prefix.sorted.bam > $SORTEDINDEX/$prefix.sorted.bam.bai;
     done
 
 fi
