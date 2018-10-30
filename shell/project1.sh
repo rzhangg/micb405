@@ -31,7 +31,7 @@ FILTER=/home/$USER/filter
 VARIANT=/home/$USER/variant
 TREE=/home/$USER/tree
 
-# bwa index $HOME/ref_genome.fasta
+bwa index $HOME/ref_genome.fasta
 
 
 for f in $DIRECTORY/*1.fastq.gz; do prefix=$( basename $f | sed 's/_1.fastq.gz//g' );
@@ -42,6 +42,7 @@ done
 
 if [ "$(ls -A $SORTED)" ]; then
     echo inbam
+    rm -r $DUP/*
     for f in $SORTED/*.sorted.bam; do
         prefix=$( basename $f | sed 's/.sorted.bam//g' );
         echo $prefix;
@@ -52,14 +53,13 @@ if [ "$(ls -A $SORTED)" ]; then
 fi
 
 
-
-
 if [ "$(ls -A $DUP)" ]; then
     echo inbam
+    rm -r $CALL/*
     for f in $DUP/*.sorted.rmdup.bam; do
         prefix=$( basename $f | sed 's/.sorted.rmdup.bam//g' );
         echo $prefix;
-	    bcftools mpileup --threads 40 --fasta-ref $HOME/ref_genome.fasta $DUP/$prefix.sorted.rmdup.bam | bcftools call -mv - > $CALL/$prefix.sorted.rmdup.raw.vcf;
+	    bcftools mpileup --threads 40 --fasta-ref $REF/ref_genome.fasta $DUP/$prefix.sorted.rmdup.bam | bcftools call -mv - > $CALL/$prefix.sorted.rmdup.raw.vcf;
     done
 fi
 
@@ -67,6 +67,7 @@ fi
 
 if [ "$(ls -A $CALL)" ]; then
     echo inbam
+    rm -r $FILTER/*
     for f in $CALL/*.sorted.rmdup.raw.vcf; do
         prefix=$( basename $f | sed 's/.sorted.rmdup.raw.vcf//g' );
         echo $prefix;
@@ -87,5 +88,5 @@ if [ "$(ls -A $variant)" ]; then
     # trimal -automated1 -in $TREE/$FILE.mfa -out $TREE/$FILE.trimal.mfa;
     raxml-ng --all --msa $TREE/$variant.mfa \
     --model GTR+G4 --tree rand{100} --bs-trees 20 \
-    --threads 1 --seed 12345 --prefix ~/tree --redo;
+    --threads 1 --seed 12345 --prefix $HOME/$OUTPUT --redo;
 fi
