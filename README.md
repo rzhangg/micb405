@@ -8,9 +8,12 @@
 
 4. every shell script will take in your username as 1st arguement e.g ./bwa.sh rzhang_mb18
 
-4.a tree.sh will take in 3 arguements ./tree.sh {username} {the variant fasta} {output file name}
+5. run project1.sh in /home/user to run entire pipeline, takes in 2 arguements 1st is username 2nd output treefile name e.g ./project1.sh rzhang_mb18 raxmltree
 
-5. order of execution
+6. Output of project1.sh should be in /home/user/project1/ as .raxml files
+
+5. Each pipeline is split into separate files as well for testing and robustsness
+    order of execution
     1 bwa.sh
     2 removedup.sh
     3 bcftools.sh
