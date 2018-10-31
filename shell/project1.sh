@@ -1,4 +1,5 @@
 mkdir project1
+mkdir fastqc
 mkdir ref
 mkdir bam
 mkdir sorted
@@ -30,9 +31,14 @@ FILTER=/home/$USER/filter
 
 VARIANT=/home/$USER/variant
 TREE=/home/$USER/tree
+FASTQC=/home/$USER/fastqc
 
-bwa index $HOME/ref_genome.fasta
+bwa index $REF/ref_genome.fasta
 
+for f in $DIRECTORY/*1.fastq.gz; do prefix=$( basename $f | sed 's/_1.fastq.gz//g' );
+    echo $prefix;
+    fastqc --threads 20 -o $FASTQC $DIRECTORY/$prefix\_?.fastq.gz;
+done
 
 for f in $DIRECTORY/*1.fastq.gz; do prefix=$( basename $f | sed 's/_1.fastq.gz//g' );
      echo $prefix;
